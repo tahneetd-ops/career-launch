@@ -1,0 +1,128 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Career Research Explorer</title>
+<style>
+:root{--bg:#10162b;--card:#1a2240;--line:#34407a;--text:#f4f6ff;--mut:#b8c0e6;--gold:#f5c842;--teal:#2dd4bf;--red:#ff7b7b;--green:#4ade80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 "Segoe UI",Arial,sans-serif}
+header{padding:18px 16px 8px;max-width:980px;margin:0 auto}h1{margin:0;font-size:28px}header p{margin:4px 0 0;color:var(--mut)}
+nav{display:flex;gap:8px;flex-wrap:wrap;max-width:980px;margin:10px auto;padding:0 16px}
+nav button{flex:1 1 180px;min-height:46px;background:var(--card);color:var(--text);border:2px solid var(--line);border-radius:12px;font:700 15px inherit;font-family:inherit;cursor:pointer}
+nav button.on{background:var(--gold);color:#000;border-color:var(--gold)}
+main{max-width:980px;margin:0 auto;padding:0 16px 120px}.tab{display:none}.tab.on{display:block}
+.card{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:16px;margin:12px 0}
+h2{margin:0 0 6px;font-size:21px;color:var(--gold)}h3{margin:0 0 4px;font-size:18px}.mut{color:var(--mut)}
+.sites{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+.site a.go{display:inline-block;margin-top:8px;background:var(--teal);color:#000;font-weight:800;border-radius:10px;padding:10px 14px;text-decoration:none}
+.site .url{font-family:Consolas,monospace;font-size:13px;color:var(--mut);word-break:break-all}
+.tag{display:inline-block;background:#0b1130;border:1px solid var(--line);border-radius:999px;padding:2px 10px;margin:4px 4px 0 0;font-size:13px}
+label{display:block;font-weight:700;margin:14px 0 4px}label small{font-weight:400;color:var(--mut)}
+input[type=text],input[type=number],select,textarea{width:100%;background:#0b1130;color:var(--text);border:2px solid var(--line);border-radius:10px;padding:11px;font:16px inherit;font-family:inherit}
+textarea{min-height:90px;resize:vertical}input:focus,textarea:focus,select:focus{outline:3px solid var(--gold)}
+.checks{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:6px}.checks label{margin:0;font-weight:600;display:flex;gap:8px;align-items:center;background:#0b1130;border:2px solid var(--line);border-radius:10px;padding:10px}
+.checks input{width:20px;height:20px}
+.btn{min-height:46px;border:0;border-radius:12px;padding:10px 18px;font:800 16px inherit;font-family:inherit;cursor:pointer;background:var(--gold);color:#000}
+.phr{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.phr a{background:#0b1130;border:2px solid var(--teal);color:var(--teal);border-radius:10px;padding:9px 12px;text-decoration:none;font-weight:700}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.res{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:12px}.res div{background:#0b1130;border:2px solid var(--line);border-radius:12px;padding:12px}.res b{display:block;font-size:22px}
+.verdict{margin-top:12px;border-radius:12px;padding:14px;font-weight:800;font-size:18px}.v-good{background:#052e16;border:2px solid var(--green)}.v-tight{background:#422006;border:2px solid var(--gold)}.v-bad{background:#450a0a;border:2px solid var(--red)}
+#copyBtn{position:fixed;right:14px;bottom:14px;z-index:99999;background:var(--gold);color:#000;border:3px solid #000;border-radius:14px;padding:12px 18px;font:800 16px/1 "Segoe UI",Arial,sans-serif;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.5)}
+#copyToast{position:fixed;right:14px;bottom:70px;z-index:99999;background:#16a34a;color:#fff;border-radius:12px;padding:12px 16px;font-weight:700;max-width:300px;display:none}
+#copyBox{position:fixed;inset:0;z-index:100000;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;padding:16px}#copyBox>div{background:#fff;color:#000;border-radius:14px;padding:16px;width:min(600px,100%)}#copyBox textarea{background:#fff;color:#000;height:240px;margin:10px 0}
+.note{background:#0b1130;border-left:5px solid var(--gold);padding:10px 14px;border-radius:8px;margin:10px 0}
+</style></head><body>
+<header><h1>🔎 Career Research Explorer</h1><p>Find out what a job is really like: the work, the pay, the training, and the life it could give you.</p></header>
+<nav id="nav"></nav>
+<main>
+<!-- TAB 1 -->
+<section class="tab on" id="t0">
+ <div class="card"><h2>Step 1: Pick a career to research</h2><label for="careerPick">Type a career you are curious about <small>(any job, even one you only half know)</small></label><input type="text" id="careerPick" placeholder="Example: veterinarian, electrician, game designer" oninput="buildPhrases()">
+ <div class="phr" id="phr"></div><p class="mut">Tap a button to search Google for that question. Then try the sites below.</p></div>
+ <div class="note"><b>If a website is blocked on your Chromebook,</b> don't worry. Tell your teacher and use a different site from this list. You only need to use <b>2 or more</b> sites.</div>
+ <div class="sites" id="sites"></div>
+ <div class="card"><h2>Which site answers which question?</h2><div id="matrix"></div></div>
+</section>
+<!-- TAB 2 -->
+<section class="tab" id="t1">
+ <div class="card"><h2>My Research Notes</h2><p class="mut">Write in your own words. If you cannot find something, that's okay. Write what you tried (see the last box).</p>
+ <label for="rCareer">The career I researched</label><input type="text" id="rCareer" placeholder="Career name">
+ <label for="rCluster">Which career cluster does it belong to?</label><select id="rCluster"></select>
+ <label>Sites I used</label><div class="checks" id="rSites"></div>
+ <label for="rDay">What does a person in this job do on a normal day?</label><textarea id="rDay" placeholder="Think: Where do they work? Who do they work with? What do they make, fix, or solve?"></textarea>
+ <div class="grid2"><div><label for="rLow">Lowest pay I found <small>(per year)</small></label><input type="text" id="rLow" placeholder="$"></div><div><label for="rHigh">Highest pay I found <small>(per year)</small></label><input type="text" id="rHigh" placeholder="$"></div></div>
+ <label for="rPaySrc">Where did I find the pay? Do two sites agree?</label><input type="text" id="rPaySrc" placeholder="Site names">
+ <label for="rEdu">What training or school does it take?</label><textarea id="rEdu" placeholder="High school, certificate, 2-year, 4-year, more? How many years?"></textarea>
+ <label for="rMatch">Which of MY strengths and values match this job?</label><textarea id="rMatch" placeholder="Use your Journey Log: strengths, soft skills, values"></textarea>
+ <label for="rLike">What I like about it, and what I do NOT like</label><textarea id="rLike"></textarea>
+ <label for="rLive">Where do I want to live someday?</label><input type="text" id="rLive" placeholder="City or town">
+ <label for="rSurprise">The most surprising thing I learned</label><textarea id="rSurprise"></textarea>
+ <label for="rMissing">What I could NOT find, and what I would try next</label><textarea id="rMissing" placeholder="Example: I could not find Wisconsin pay. Next I would try CareerOneStop."></textarea>
+ </div>
+</section>
+<!-- TAB 3 -->
+<section class="tab" id="t2">
+ <div class="card"><h2>Can I Afford the Life I Want?</h2><p class="mut">Use the pay you found and the rent in the city where you want to live. Look up rent on a site like Zillow or Apartments.com (search "apartments in your city"). These numbers are rough guesses, and that is okay.</p>
+ <div class="grid2"><div><label for="aCity">City I want to live in</label><input type="text" id="aCity" oninput="calc()" placeholder="City, state"></div>
+ <div><label for="aPay">Yearly pay (before taxes)</label><input type="number" id="aPay" oninput="calc()" placeholder="50000"></div>
+ <div><label for="aRent">Monthly rent I found</label><input type="number" id="aRent" oninput="calc()" placeholder="1000"></div>
+ <div><label for="aCar">Car or transportation / month</label><input type="number" id="aCar" value="400" oninput="calc()"></div>
+ <div><label for="aFood">Food / month</label><input type="number" id="aFood" value="300" oninput="calc()"></div>
+ <div><label for="aUtil">Utilities and phone / month</label><input type="number" id="aUtil" value="200" oninput="calc()"></div>
+ <div><label for="aSave">Savings / month</label><input type="number" id="aSave" value="300" oninput="calc()"></div></div>
+ <div class="res" id="res"></div><div id="verdict"></div>
+ <p class="mut" style="margin-top:12px">Take-home pay is estimated at about 75% of your pay (taxes take roughly 25%). The "30% rule" says rent should be no more than 30% of your pay before taxes.</p></div>
+ <div class="card"><label for="aWhy">Does this career pay for the lifestyle I want in this city? Why or why not?</label><textarea id="aWhy"></textarea>
+ <label for="aChange">What could I change to make it work? (a different city, roommates, more training, a higher paying job in the same cluster)</label><textarea id="aChange"></textarea></div>
+</section>
+<!-- TAB 4 -->
+<section class="tab" id="t3">
+ <div class="card"><h2>Is this a good source?</h2><p class="mut">Not everything online is true. Check each one before you trust a website.</p>
+ <div class="checks" id="srcChecks"></div></div>
+ <div class="card"><h2>Pay tips</h2><ul><li>Pay changes by city, experience, and employer. Write a <b>range</b>, like $45,000 to $65,000.</li><li>"Average" or "median" pay is the middle. Starting pay is usually lower.</li><li>Job posting sites show what employers offer right now. Government sites show the average for the whole country or state.</li><li>If two sites agree, you can trust the number more.</li></ul></div>
+ <div class="card"><h2>Quick Wisconsin idea</h2><p>Search for your career plus "Wisconsin" to see pay and jobs near you. Then compare to a bigger city.</p></div>
+</section>
+</main>
+<button id="copyBtn" onclick="copyMyWork()">📋 Copy my work</button><div id="copyToast"></div>
+<div id="copyBox"><div><b>Copy didn't work automatically.</b> Click in the box, press Ctrl + A, then Ctrl + C. Then paste it in your Google Form.<textarea id="copyArea" readonly></textarea><button class="btn" onclick="document.getElementById('copyBox').style.display='none'">Close</button></div></div>
+<script>
+var CLUSTERS=["Agriculture & Natural Resources","Architecture & Construction","Arts & Communications","Business Management","Education & Training","Finance","Government & Public Administration","Health Science","Hospitality & Tourism","Human Services","Information Technology","Law & Public Safety","Manufacturing","Marketing","Science & Engineering","Transportation","Not sure yet"];
+var SITES=[
+{n:"Google",u:"https://www.google.com",d:"Best place to start. Search a question like a person would ask it.",t:["any question","news","videos"],ex:"Try: what does a [job] do all day"},
+{n:"Roadtrip Nation",u:"https://roadtripnation.com",d:"Real people tell the story of how they got their job, with videos and interviews.",t:["real stories","how they started","interviews"],ex:"Search for a job or interest."},
+{n:"Indeed",u:"https://www.indeed.com",d:"See real job postings. Read what skills and training employers ask for and what pay they offer.",t:["pay offered","skills needed","jobs near me"],ex:"Search your job and a city."},
+{n:"O*NET OnLine",u:"https://www.onetonline.org",d:"A government site that lists the tasks, skills and tools for almost every job.",t:["daily tasks","skills","tools"],ex:"Use 'Find Occupations'."},
+{n:"Occupational Outlook Handbook",u:"https://www.bls.gov/ooh",d:"The U.S. Bureau of Labor Statistics. Pay, training needed, and if the job is growing.",t:["pay","education","job growth"],ex:"Search the job name."},
+{n:"CareerOneStop",u:"https://www.careeronestop.org",d:"Career videos, and pay for each state, including Wisconsin.",t:["Wisconsin pay","videos","training"],ex:"Try 'Explore Careers'."},
+{n:"My Next Move",u:"https://www.mynextmove.org",d:"Made to be easy to read. Tells you what the job is like and what you need to start.",t:["easy to read","what it's like"],ex:"Type a job in the box."},
+{n:"YouTube",u:"https://www.youtube.com",d:"Watch people show what their job looks like for a day.",t:["day in the life","real workplaces"],ex:"Try: day in the life of a [job]"}];
+var MATRIX=[["What do they do all day?","Roadtrip Nation, O*NET OnLine, YouTube, My Next Move"],["How much do they make?","Occupational Outlook Handbook, CareerOneStop, Indeed"],["What school or training do I need?","Occupational Outlook Handbook, O*NET OnLine, CareerOneStop"],["Is the job growing?","Occupational Outlook Handbook"],["What is it like to live this job?","Roadtrip Nation, YouTube"],["Are there jobs near me?","Indeed, CareerOneStop"]];
+var SRC=["Who made this page? Is it a government, school, or real company site?","Is it new? Look for the date.","Do two other sites say the same thing?","Is it trying to sell me something?","Does it show where its numbers came from?"];
+var TABS=["🔎 Where to Look","📝 My Research Notes","🏙️ Can I Afford It?","✅ Source Check"];
+function $(i){return document.getElementById(i)}
+var nav=$('nav');TABS.forEach(function(t,i){var b=document.createElement('button');b.textContent=t;b.onclick=function(){show(i)};nav.appendChild(b)});
+function show(i){[].forEach.call(document.querySelectorAll('.tab'),function(s,k){s.classList.toggle('on',k===i)});[].forEach.call(nav.children,function(b,k){b.classList.toggle('on',k===i)});window.scrollTo(0,0)}
+show(0);
+SITES.forEach(function(s){var d=document.createElement('div');d.className='card site';d.innerHTML='<h3>'+s.n+'</h3><p>'+s.d+'</p>'+s.t.map(function(x){return'<span class="tag">'+x+'</span>'}).join('')+'<p class="mut">'+s.ex+'</p><div class="url">'+s.u.replace('https://','')+'</div><a class="go" target="_blank" rel="noopener" href="'+s.u+'">Open '+s.n+' ↗</a>';$('sites').appendChild(d)});
+$('matrix').innerHTML=MATRIX.map(function(m){return'<p><b>'+m[0]+'</b><br><span class="mut">'+m[1]+'</span></p>'}).join('');
+$('rCluster').innerHTML='<option value="">Choose one</option>'+CLUSTERS.map(function(c){return'<option>'+c+'</option>'}).join('');
+$('rSites').innerHTML=SITES.map(function(s,i){return'<label><input type="checkbox" value="'+s.n+'">'+s.n+'</label>'}).join('')+'<label><input type="checkbox" value="Other">Other site</label>';
+$('srcChecks').innerHTML=SRC.map(function(s){return'<label><input type="checkbox">'+s+'</label>'}).join('');
+function buildPhrases(){var c=$('careerPick').value.trim(),box=$('phr');if(!c){box.innerHTML='';return}
+ var q=["what does a "+c+" do all day","day in the life of a "+c,c+" salary Wisconsin","how to become a "+c,c+" pros and cons","what school do you need to be a "+c];
+ box.innerHTML=q.slice(0,5).map(function(x){return'<a target="_blank" rel="noopener" href="https://www.google.com/search?q='+encodeURIComponent(x)+'">'+x+'</a>'}).join('');if(!$('rCareer').value)$('rCareer').value=c}
+function money(n){return'$'+Math.round(n).toLocaleString()}
+function calc(){var pay=+$('aPay').value,rent=+$('aRent').value;var res=$('res'),v=$('verdict');if(!pay||!rent){res.innerHTML='';v.innerHTML='';return}
+ var mg=pay/12,mt=mg*0.75,other=(+$('aCar').value||0)+(+$('aFood').value||0)+(+$('aUtil').value||0)+(+$('aSave').value||0),left=mt-rent-other,pg=rent/mg*100,pt=rent/mt*100;
+ res.innerHTML='<div>Monthly pay before taxes<b>'+money(mg)+'</b></div><div>Estimated take-home<b>'+money(mt)+'</b></div><div>Rent is this much of my pay before taxes<b>'+pg.toFixed(0)+'%</b>'+(pg>30?'Over the 30% rule':'Within the 30% rule')+'</div><div>Rent is this much of my take-home<b>'+pt.toFixed(0)+'%</b></div><div>Left for fun and surprises<b>'+money(left)+'</b>per month</div>';
+ var cls=left>=500?'v-good':(left>=0?'v-tight':'v-bad'),txt=left>=500?'Comfortable: you would have room to spare.':(left>=0?'Tight: it works, but there is not much extra.':'Not enough: you would run out of money each month.');
+ v.innerHTML='<div class="verdict '+cls+'">'+txt+'</div>'}
+function val(i){var e=$(i);return e?e.value.trim():''}
+function getText(){var sites=[].map.call(document.querySelectorAll('#rSites input:checked'),function(x){return x.value}).join(', ');
+ var s='MY CAREER RESEARCH\nCareer: '+val('rCareer')+'\nCluster: '+val('rCluster')+'\nSites I used: '+sites+'\n\nWhat they do on a normal day: '+val('rDay')+'\n\nPay I found: '+val('rLow')+' to '+val('rHigh')+'\nWhere I found it: '+val('rPaySrc')+'\n\nTraining or school needed: '+val('rEdu')+'\n\nMy strengths and values that match: '+val('rMatch')+'\n\nWhat I like and do not like: '+val('rLike')+'\n\nWhere I want to live: '+val('rLive')+'\nMost surprising thing: '+val('rSurprise')+'\nWhat I could not find and what I would try next: '+val('rMissing');
+ var pay=+$('aPay').value,rent=+$('aRent').value;
+ if(pay&&rent){var mt=pay/12*0.75,other=(+$('aCar').value||0)+(+$('aFood').value||0)+(+$('aUtil').value||0)+(+$('aSave').value||0),left=mt-rent-other;
+  s+='\n\nCAN I AFFORD IT?\nCity: '+val('aCity')+'\nYearly pay: '+money(pay)+'\nMonthly rent: '+money(rent)+'\nLeft over each month: '+money(left)+'\nDoes this career pay for the lifestyle I want here? '+val('aWhy')+'\nWhat I could change: '+val('aChange')}
+ else if(val('aWhy')||val('aChange')){s+='\n\nCAN I AFFORD IT?\n'+val('aWhy')+'\n'+val('aChange')}
+ return s}
+function copyMyWork(){var t=getText();if(!val('rCareer')&&!val('rDay')){say('Nothing to copy yet. Fill in My Research Notes first.',true);return}
+ function fb(){var b=$('copyBox'),a=$('copyArea');a.value=t;b.style.display='flex';a.focus();a.select();try{if(document.execCommand('copy')){b.style.display='none';say('Copied! Now paste it in your Google Form (Ctrl + V).')}}catch(e){}}
+ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){say('Copied! Now paste it in your Google Form (Ctrl + V).')},fb)}else fb()}
+function say(m,bad){var x=$('copyToast');x.textContent=m;x.style.background=bad?'#b91c1c':'#16a34a';x.style.display='block';clearTimeout(window.__ct);window.__ct=setTimeout(function(){x.style.display='none'},5000)}
+</script></body></html>
